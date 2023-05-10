@@ -98,6 +98,10 @@ export const getBCakeFarmBoosterAddress = () => {
   return getAddress(addresses.bCakeFarmBooster)
 }
 
+export const getBCakeFarmBoosterV3Address = () => {
+  return getAddress(addresses.bCakeFarmBoosterV3)
+}
+
 export const getBCakeFarmBoosterProxyFactoryAddress = () => {
   return getAddress(addresses.bCakeFarmBoosterProxyFactory)
 }

@@ -21,6 +21,7 @@ import { useMemo } from 'react'
 import { getMulticallAddress, getPredictionsV1Address, getZapAddress } from 'utils/addressHelpers'
 import {
   getAnniversaryAchievementContract,
+  getBCakeFarmBoosterV3Contract,
   getBCakeFarmBoosterContract,
   getBCakeFarmBoosterProxyFactoryContract,
   getBCakeProxyContract,
@@ -279,32 +280,32 @@ export function useContract<T extends Contract = Contract>(
   }, [addressOrAddressMap, ABI, providerOrSigner, chainId]) as T
 }
 
-export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
-  return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
+export function useTokenContract(tokenAddress: string, withSignerIfPossible?: boolean) {
+  return useContract<Erc20>(tokenAddress, ERC20_ABI, Boolean(withSignerIfPossible))
 }
 
-export function useWNativeContract(withSignerIfPossible?: boolean): Contract | null {
+export function useWNativeContract(withSignerIfPossible: boolean): Contract | null {
   const { chainId } = useActiveChainId()
   return useContract<Weth>(chainId ? WNATIVE[chainId]?.address : undefined, WETH_ABI, withSignerIfPossible)
 }
 
-export function useWBETHContract(withSignerIfPossible?: boolean): Contract | null {
+export function useWBETHContract(withSignerIfPossible: boolean): Contract | null {
   const { chainId } = useActiveChainId()
 
   const abi = useMemo(
-    () => ([ChainId.ETHEREUM, ChainId.GOERLI].includes(chainId) ? WBETH_ETH_ABI : WBETH_BSC_ABI),
+    () => ([ChainId.ETHEREUM, ChainId.GOERLI].includes(chainId ?? ChainId.BSC) ? WBETH_ETH_ABI : WBETH_BSC_ABI),
     [chainId],
   )
 
   return useContract<Weth>(chainId ? WBETH[chainId] : undefined, abi, withSignerIfPossible)
 }
 
-export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
-  return useContract<Erc20Bytes32>(tokenAddress, ERC20_BYTES32_ABI, withSignerIfPossible)
+export function useBytes32TokenContract(tokenAddress: string, withSignerIfPossible?: boolean): Contract | null {
+  return useContract<Erc20Bytes32>(tokenAddress, ERC20_BYTES32_ABI, Boolean(withSignerIfPossible))
 }
 
-export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): IPancakePair | null {
-  return useContract(pairAddress, IPancakePairABI, withSignerIfPossible)
+export function usePairContract(pairAddress: string, withSignerIfPossible?: boolean): IPancakePair | null {
+  return useContract(pairAddress, IPancakePairABI, Boolean(withSignerIfPossible))
 }
 
 export function useMulticallContract() {
@@ -330,6 +331,11 @@ export function useZapContract(withSignerIfPossible = true) {
 export function useBCakeFarmBoosterContract(withSignerIfPossible = true) {
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible, true)
   return useMemo(() => getBCakeFarmBoosterContract(providerOrSigner), [providerOrSigner])
+}
+
+export function useBCakeFarmBoosterV3Contract(withSignerIfPossible = true) {
+  const providerOrSigner = useProviderOrSigner(withSignerIfPossible, true)
+  return useMemo(() => getBCakeFarmBoosterV3Contract(providerOrSigner), [providerOrSigner])
 }
 
 export function useBCakeFarmBoosterProxyFactoryContract(withSignerIfPossible = true) {
@@ -380,7 +386,7 @@ export const useQuoterV2Contract = () => {
 
 // Philip TODO: Add NonfungiblePositionManager | null type
 export function useV3NFTPositionManagerContract(withSignerIfPossible?: boolean) {
-  return useContract(addresses.nftPositionManager, NFTPositionManagerABI, withSignerIfPossible)
+  return useContract(addresses.nftPositionManager, NFTPositionManagerABI, Boolean(withSignerIfPossible))
 }
 
 export function useMasterchefV3(withSignerIfPossible?: boolean) {
