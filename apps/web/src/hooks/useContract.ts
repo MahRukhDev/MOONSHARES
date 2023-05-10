@@ -284,12 +284,12 @@ export function useTokenContract(tokenAddress: string, withSignerIfPossible?: bo
   return useContract<Erc20>(tokenAddress, ERC20_ABI, Boolean(withSignerIfPossible))
 }
 
-export function useWNativeContract(withSignerIfPossible: boolean): Contract | null {
+export function useWNativeContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainId } = useActiveChainId()
-  return useContract<Weth>(chainId ? WNATIVE[chainId]?.address : undefined, WETH_ABI, withSignerIfPossible)
+  return useContract<Weth>(chainId ? WNATIVE[chainId]?.address : undefined, WETH_ABI, Boolean(withSignerIfPossible))
 }
 
-export function useWBETHContract(withSignerIfPossible: boolean): Contract | null {
+export function useWBETHContract(withSignerIfPossible?: boolean): Contract | null {
   const { chainId } = useActiveChainId()
 
   const abi = useMemo(
@@ -297,14 +297,14 @@ export function useWBETHContract(withSignerIfPossible: boolean): Contract | null
     [chainId],
   )
 
-  return useContract<Weth>(chainId ? WBETH[chainId] : undefined, abi, withSignerIfPossible)
+  return useContract<Weth>(chainId ? WBETH[chainId] : undefined, abi, Boolean(withSignerIfPossible))
 }
 
-export function useBytes32TokenContract(tokenAddress: string, withSignerIfPossible?: boolean): Contract | null {
+export function useBytes32TokenContract(tokenAddress?: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<Erc20Bytes32>(tokenAddress, ERC20_BYTES32_ABI, Boolean(withSignerIfPossible))
 }
 
-export function usePairContract(pairAddress: string, withSignerIfPossible?: boolean): IPancakePair | null {
+export function usePairContract(pairAddress?: string, withSignerIfPossible?: boolean): IPancakePair | null {
   return useContract(pairAddress, IPancakePairABI, Boolean(withSignerIfPossible))
 }
 
