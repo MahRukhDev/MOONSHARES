@@ -280,7 +280,7 @@ export function useContract<T extends Contract = Contract>(
   }, [addressOrAddressMap, ABI, providerOrSigner, chainId]) as T
 }
 
-export function useTokenContract(tokenAddress: string, withSignerIfPossible?: boolean) {
+export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, Boolean(withSignerIfPossible))
 }
 
