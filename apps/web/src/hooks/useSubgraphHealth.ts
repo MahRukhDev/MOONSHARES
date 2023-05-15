@@ -54,7 +54,7 @@ const useSubgraphHealth = (subgraphName: string) => {
             }
           `,
             ),
-            currentBlockNumber ? Promise.resolve(currentBlockNumber) : bscRpcProvider.getBlockNumber(),
+            currentBlockNumber ? Promise.resolve(currentBlockNumber) : Number(bscRpcProvider.getBlockNumber()),
           ])
 
           const isHealthy = indexingStatusForCurrentVersion.health === 'healthy'
