@@ -1,7 +1,7 @@
 import { BinanceWalletConnector } from '@pancakeswap/wagmi/connectors/binanceWallet'
 import { BloctoConnector } from '@pancakeswap/wagmi/connectors/blocto'
 import { TrustWalletConnector } from '@pancakeswap/wagmi/connectors/trustWallet'
-import { CHAINS } from 'config/chains'
+import { CHAINS, MAINNET_CHAINS } from 'config/chains'
 import { PUBLIC_NODES } from 'config/nodes'
 import memoize from 'lodash/memoize'
 import { configureChains, createConfig } from 'wagmi'
@@ -10,7 +10,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { LedgerConnector } from 'wagmi/connectors/ledger'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import { WalletConnectLegacyConnector } from 'wagmi/connectors/walletConnectLegacy'
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 export const { publicClient, chains } = configureChains(CHAINS, [
@@ -39,17 +39,19 @@ export const coinbaseConnector = new CoinbaseWalletConnector({
   },
 })
 
-export const walletConnectConnector = new WalletConnectLegacyConnector({
-  chains,
+export const walletConnectConnector = new WalletConnectConnector({
+  chains: MAINNET_CHAINS,
   options: {
-    qrcode: true,
+    showQrModal: true,
+    projectId: 'e542ff314e26ff34de2d4fba98db70bb',
   },
 })
 
-export const walletConnectNoQrCodeConnector = new WalletConnectLegacyConnector({
-  chains,
+export const walletConnectNoQrCodeConnector = new WalletConnectConnector({
+  chains: MAINNET_CHAINS,
   options: {
-    qrcode: false,
+    showQrModal: false,
+    projectId: 'e542ff314e26ff34de2d4fba98db70bb',
   },
 })
 

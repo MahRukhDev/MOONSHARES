@@ -33,3 +33,5 @@ const bsc = {
 } satisfies Chain
 
 export const CHAINS = [bsc, mainnet, bscTestnet, goerli]
+
+export const MAINNET_CHAINS = [bsc, mainnet]
